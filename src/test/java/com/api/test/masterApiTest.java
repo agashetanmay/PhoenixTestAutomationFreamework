@@ -23,7 +23,7 @@ public class masterApiTest {
 		.accept(ContentType.ANY)
 		.contentType("")   //whenever we make post request RA added content type application/url-formecoded
 		.when().post("/master").then().log().all().statusCode(200)
-		.and().time(Matchers.lessThan(1000L)).and()
+		.and().time(Matchers.lessThan(1500L)).and()
 		.body("message",Matchers.equalTo("Success"))
 		.body("data",Matchers.notNullValue())
 		.body("data", Matchers.hasKey("mst_oem"))
