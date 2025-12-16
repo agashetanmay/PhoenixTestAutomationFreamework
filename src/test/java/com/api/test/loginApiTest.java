@@ -1,5 +1,6 @@
 package com.api.test;
 
+import com.api.Utils.configManager;
 import com.api.pojo.userCredentials;
 
 import io.restassured.http.ContentType;
@@ -8,16 +9,18 @@ import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.*;
 
+import java.io.IOException;
+
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
 public class loginApiTest {
 	@Test
-	public void loginApiTest() {
+	public void loginApiTest() throws IOException {
 		
 		userCredentials user = new userCredentials("iamfd","password");
 		
-	    given().baseUri("http://64.227.160.186:9000/v1").and().contentType(ContentType.JSON)
+	    given().baseUri(configManager.getProperty("BASE_URI")).and().contentType(ContentType.JSON)
 	     .accept(ContentType.ANY)
 	     .body(user).when().post("login").then().statusCode(200).and()
 	     .log().body()
