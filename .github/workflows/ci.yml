@@ -14,6 +14,15 @@ on:
   pull_request:
     branches: [ "master" ]
 
+  workflow_dispatch:
+    inputs:
+      env:
+      description: "Environment"
+      type: choice
+      options: [qa, uat, dev]
+      default: qa
+      required: true
+
 jobs:
   test:
 
@@ -28,7 +37,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Execute test automation framework
-      run: mvn clean test -DsuiteXmlFile=testNG.xml -Denv=qa
+      run: mvn clean test -DsuiteXmlFile=testNG.xml -Denv="${{ github.event.inputs.env }}"
       
     - name: Upload a Build Artifact
       if: always()
