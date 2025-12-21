@@ -5,11 +5,12 @@ import static io.restassured.RestAssured.given;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
+import com.api.Utils.SpecUtil;
 import com.api.Utils.authTokenProvider;
 import com.api.Utils.configManager;
 import com.api.constant.Role;
 
-import io.restassured.RestAssured;
+import static io.restassured.RestAssured.*;
 import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
 
@@ -18,11 +19,10 @@ public class masterApiTest {
 	@Test
 	public void VerifyMasterApiTest() {
 		
-		RestAssured.given().baseUri(configManager.getProperty("BASE_URI"))
-		.header("Authorization",authTokenProvider.getToken(Role.FD))
-		.accept(ContentType.ANY)
+		given().spec(SpecUtil.requestSpecificationWithAuth(Role.FD))
 		.contentType("")   //whenever we make post request RA added content type application/url-formecoded
-		.when().post("/master").then().log().all().statusCode(200)
+		.when().post("/master")
+		.then().spec(SpecUtil.responseSpec_OK())
 		.and().time(Matchers.lessThan(1500L)).and()
 		.body("message",Matchers.equalTo("Success"))
 		.body("data",Matchers.notNullValue())
@@ -36,10 +36,10 @@ public class masterApiTest {
 	}
 	@Test
 	public void MasterAPITestInvalidAuthToken() {
-		given().baseUri(configManager.getProperty("BASE_URI")).and().header("Authorization","").and()
+		given().spec(SpecUtil.requestSpec()).header("Authorization","").and()
 		.contentType("").
 		when().post("/master")
-		.then().log().all().statusCode(401);
+		.then().spec(SpecUtil.responseSpec_TEXT(401));
 	}
 	
 	
