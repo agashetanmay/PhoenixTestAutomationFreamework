@@ -3,6 +3,7 @@ package com.api.test;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
+import com.api.Utils.SpecUtil;
 import com.api.Utils.authTokenProvider;
 import com.api.Utils.configManager;
 import com.api.constant.Role;
@@ -16,13 +17,10 @@ public class countApiTest {
 	@Test
 	public void verfiyCountAPI() {
 		
-		given().baseUri(configManager.getProperty("BASE_URI")).and()
-		.header("Authorization",authTokenProvider.getToken(Role.FD))
-		.accept(ContentType.ANY).and()
+		given().spec(SpecUtil.requestSpecificationWithAuth(Role.FD))
 		.when().get("/dashboard/count")
 		.then()
-		.statusCode(200)
-		.and().log().all()
+		.spec(SpecUtil.responseSpec_OK())
 		.body("message", Matchers.equalTo("Success"))
 		.time(Matchers.lessThan(15000L))
 		.body("data",Matchers.notNullValue())
@@ -36,8 +34,8 @@ public class countApiTest {
 	}
 	@Test
 	public void countAPITestMissingAuthToken() {
-		given().baseUri(configManager.getProperty("BASE_URI")).and().when().get("/dashboard/count")
-		.then().log().all().statusCode(401);
+		given().spec(SpecUtil.requestSpec()).when().get("/dashboard/count")
+		.then().spec(SpecUtil.responseSpec_TEXT(401));
 	}
 	
 
