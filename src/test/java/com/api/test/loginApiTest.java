@@ -1,5 +1,6 @@
 package com.api.test;
 
+import com.api.Utils.SpecUtil;
 import com.api.Utils.configManager;
 import com.api.pojo.userCredentials;
 
@@ -20,12 +21,12 @@ public class loginApiTest {
 		
 		userCredentials user = new userCredentials("iamfd","password");
 		
-	    given().baseUri(configManager.getProperty("BASE_URI")).and().contentType(ContentType.JSON)
-	     .accept(ContentType.ANY)
-	     .body(user).when().post("login").then().statusCode(200).and()
-	     .log().body()
-	     .log().all()
-	     .body("message",Matchers.equalTo("Success")).and()
+	      given().spec(SpecUtil.requestSpec(user))
+	     .when()
+	     .post("login") 
+	     .then().spec(SpecUtil.responseSpec_OK())
+	     .body("message",Matchers.equalTo("Success"))
+	     .and()
 	     .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Response-schema/loginResponseSchema.json"));
 	     
 	   
