@@ -7,8 +7,9 @@
     <classes>
       <class name="com.api.test.loginApiTest"/>
       <class name="com.api.test.userDetailsAPITest"/>
-       <class name="com.api.test.countApiTest"/>
-       <class name="com.api.test.masterApiTest"/>
+      <class name="com.api.test.countApiTest"/>
+      <class name="com.api.test.masterApiTest"/>
+      <class name="com.api.test.createJobApiTest"/>
      
     </classes>
   </test>
