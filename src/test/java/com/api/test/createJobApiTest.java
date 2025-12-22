@@ -1,6 +1,7 @@
 package com.api.test;
 
 import org.hamcrest.Matchers;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.api.Utils.DateTimeUtil;
@@ -30,13 +31,13 @@ import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
 
 public class createJobApiTest {
-
-	@Test
-	public void verifyCreateJobApiTest() {
-		
+	createJobPayload createjobpayload;
+	
+	@BeforeMethod(description = "create job api payload")
+	public void Setup() {
 		Customer customer = new Customer("tanmay", "agashe", "6757898909", "", "tanmay@gmail.com", "");
 		CustomerAddress customeraddress = new CustomerAddress("123 DP ROAD", "ASD APT", "zxs", "ZXC", "qwe", "334356", "India", "Chhattisgarh");
-		CustomerProduct customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "10346567890346", "10346567890346", "10346567890346", DateTimeUtil.getTimeWithDaysAgo(10), 
+		CustomerProduct customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "11346567890346", "11346567890346", "11346567890346", DateTimeUtil.getTimeWithDaysAgo(10), 
 		Product.NEXUS_2.getCode(), Model.Nexus2_Blue.getCode());
 		
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "smartphone is running slow");
@@ -44,8 +45,13 @@ public class createJobApiTest {
 		List<Problems> problemList = new ArrayList<Problems>();
 		problemList.add(problems);
 		
-		createJobPayload createjobpayload = new createJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warrenty_status.IN_WARRENTY.getCode(), OEM.GOOGLE.getCode(),customer,customeraddress,customerproduct,problemList);
-		
+		createjobpayload = new createJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warrenty_status.IN_WARRENTY.getCode(), OEM.GOOGLE.getCode(),
+		customer,customeraddress,customerproduct,problemList);
+	}
+
+	
+    @Test(description = "verify create JOB api is able to create Inwarrenty job", groups = { "api", "regression", "smoke" })
+	public void verifyCreateJobApiTest() {
 		given()
 		.spec(SpecUtil.requestSpecificationWithAuthAndPayload(Role.FD, createjobpayload))
 		.when().post("/job/create")

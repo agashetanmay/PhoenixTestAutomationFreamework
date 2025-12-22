@@ -13,24 +13,25 @@ import static io.restassured.RestAssured.*;
 import java.io.IOException;
 
 import org.hamcrest.Matchers;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class loginApiTest {
-	@Test
+	userCredentials user;
+
+	@BeforeMethod(description = "create the payload for kogin API")
+	public void setup() {
+		user = new userCredentials("iamfd", "password");
+	}
+
+	@Test(description = "verify if login api working for FD user", groups = { "api", "regression", "smoke" })
 	public void loginApiTest() throws IOException {
-		
-		userCredentials user = new userCredentials("iamfd","password");
-		
-	      given().spec(SpecUtil.requestSpec(user))
-	     .when()
-	     .post("login") 
-	     .then().spec(SpecUtil.responseSpec_OK())
-	     .body("message",Matchers.equalTo("Success"))
-	     .and()
-	     .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Response-schema/loginResponseSchema.json"));
-	     
-	   
-	     
+		given().spec(SpecUtil.requestSpec(user))
+		.when().post("login")
+		.then().spec(SpecUtil.responseSpec_OK())
+		.body("message", Matchers.equalTo("Success")).and()
+		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Response-schema/loginResponseSchema.json"));
+
 	}
 
 }
