@@ -7,7 +7,14 @@ import com.api.Utils.DateTimeUtil;
 import com.api.Utils.SpecUtil;
 import com.api.Utils.authTokenProvider;
 import com.api.Utils.configManager;
+import com.api.constant.Model;
+import com.api.constant.OEM;
+import com.api.constant.Platform;
+import com.api.constant.Problem;
+import com.api.constant.Product;
 import com.api.constant.Role;
+import com.api.constant.ServiceLocation;
+import com.api.constant.Warrenty_status;
 import com.api.request.model.Customer;
 import com.api.request.model.CustomerAddress;
 import com.api.request.model.CustomerProduct;
@@ -29,13 +36,15 @@ public class createJobApiTest {
 		
 		Customer customer = new Customer("tanmay", "agashe", "6757898909", "", "tanmay@gmail.com", "");
 		CustomerAddress customeraddress = new CustomerAddress("123 DP ROAD", "ASD APT", "zxs", "ZXC", "qwe", "334356", "India", "Chhattisgarh");
-		CustomerProduct customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "92346567890346", "92346567890346", "92346567890346", DateTimeUtil.getTimeWithDaysAgo(10), 1, 1);
+		CustomerProduct customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "10346567890346", "10346567890346", "10346567890346", DateTimeUtil.getTimeWithDaysAgo(10), 
+		Product.NEXUS_2.getCode(), Model.Nexus2_Blue.getCode());
 		
-		Problems problems = new Problems(3, "display issue");
+		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "smartphone is running slow");
+		
 		List<Problems> problemList = new ArrayList<Problems>();
 		problemList.add(problems);
 		
-		createJobPayload createjobpayload = new createJobPayload(0, 2, 1, 1,customer,customeraddress,customerproduct,problemList);
+		createJobPayload createjobpayload = new createJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warrenty_status.IN_WARRENTY.getCode(), OEM.GOOGLE.getCode(),customer,customeraddress,customerproduct,problemList);
 		
 		given()
 		.spec(SpecUtil.requestSpecificationWithAuthAndPayload(Role.FD, createjobpayload))
