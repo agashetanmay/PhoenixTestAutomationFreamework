@@ -2,7 +2,7 @@ package com.api.test;
 
 import com.api.Utils.SpecUtil;
 import com.api.Utils.configManager;
-import com.api.pojo.userCredentials;
+import com.api.request.model.userCredentials;
 
 import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
