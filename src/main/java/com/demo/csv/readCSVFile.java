@@ -18,7 +18,7 @@ public class readCSVFile {
 //				"C:\\Users\\tanagash\\eclipse-workspace\\PhoenixApiTestAutomation\\src\\main\\resources\\testData\\Logincred.csv");
 //		FileReader FileReader = new FileReader(csvFile);
 
-		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("testData/Logincred.csv");
+		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("testData/LoginCredentials.csv");
 
 		InputStreamReader isr = new InputStreamReader(is);
 		
@@ -29,7 +29,7 @@ public class readCSVFile {
 		for (String[] dataArray : dataList) {
 			for (String data : dataArray) {
 
-				System.out.println(data.replace(",", " "));
+				System.out.print(data+ " ");
 
 			}
 			System.out.println();
