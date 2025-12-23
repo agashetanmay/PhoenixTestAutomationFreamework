@@ -1,19 +1,23 @@
-package com.demo.csv;
+package com.api.Utils;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.List;
+
+import com.dataProviders.api.bean.userBean;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.exceptions.CsvException;
 
-
-public class readCSVFile_MapToPOJO {
+public class CSVReaderUtility {
 	
-	public static void main(String[] args) throws CsvException, IOException {
-		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("testData/LoginCredentials.csv");
+	private CSVReaderUtility() {
+		
+	}
+	
+	public static Iterator<userBean> loadCSV(String pathOfCSVfile){
+		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(pathOfCSVfile);
 
           if (is == null) {
            throw new RuntimeException("CSV file not found");
@@ -30,12 +34,7 @@ public class readCSVFile_MapToPOJO {
 		
 		List<userBean> userList = csvBean.parse();
 		
-		for (userBean user : userList) {
-		    System.out.println(user.getUsername() + " : " + user.getPassword());
-		}
-		System.out.println(userList.get(1).getUsername());
-		
-		
-		
+		return userList.iterator();
 	}
+
 }
