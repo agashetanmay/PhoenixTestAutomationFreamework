@@ -23,14 +23,14 @@ public class readCSVFile_MapToPOJO {
 		CSVReader csvReader = new CSVReader(isr);
 		
 		//MAP CSV TO POJO
-		CsvToBean<userPOJO> csvBean = new CsvToBeanBuilder<userPOJO>(csvReader)
-				.withType(userPOJO.class)
+		CsvToBean<userBean> csvBean = new CsvToBeanBuilder<userBean>(csvReader)
+				.withType(userBean.class)
 				.withIgnoreEmptyLine(true)
 				.build();
 		
-		List<userPOJO> userList = csvBean.parse();
+		List<userBean> userList = csvBean.parse();
 		
-		for (userPOJO user : userList) {
+		for (userBean user : userList) {
 		    System.out.println(user.getUsername() + " : " + user.getPassword());
 		}
 		System.out.println(userList.get(1).getUsername());

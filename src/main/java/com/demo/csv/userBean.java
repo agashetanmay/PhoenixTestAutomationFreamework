@@ -2,7 +2,7 @@ package com.demo.csv;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class userPOJO {
+public class userBean {
 
     @CsvBindByName(column = "username")
     public String x;
@@ -11,10 +11,10 @@ public class userPOJO {
     public String y;
 
     // required no-arg constructor
-    public userPOJO() {
+    public userBean() {
     }
 
-    public userPOJO(String username, String password) {
+    public userBean(String username, String password) {
         this.x = username;
         this.y = password;
     }
@@ -38,7 +38,7 @@ public class userPOJO {
 
     @Override
     public String toString() {
-        return "userPOJO [username=" + x + ", password=" + y + "]";
+        return "userBean [username=" + x + ", password=" + y + "]";
     }
 }
 
