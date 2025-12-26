@@ -26,4 +26,6 @@ public class FakerDemo {
 	 System.out.println(faker.numerify("123########"));
 	}
 
+	
+
 }
