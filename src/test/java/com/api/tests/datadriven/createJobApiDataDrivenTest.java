@@ -33,7 +33,7 @@ import io.restassured.module.jsv.JsonSchemaValidator;
 public class createJobApiDataDrivenTest {
 	
 	
-    @Test(description = "verify create JOB api is able to create Inwarrenty job", groups = { "api", "regression", "smoke" },
+    @Test(description = "verify create JOB api is able to create Inwarrenty job", groups = { "api", "regression", "smoke","csv" },
     dataProviderClass = com.dataProviders.DataProviderUtils.class, dataProvider = "CreateJobAPIdataProvider"
     )
 	public void verifyCreateJobApiTest(createJobPayload createjobpayload) {

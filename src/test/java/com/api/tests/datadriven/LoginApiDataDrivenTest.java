@@ -23,7 +23,7 @@ public class LoginApiDataDrivenTest {
 //		user = new userCredentials("iamfd", "password");
 //	}
 
-	@Test(description = "verify if login api working for FD user", groups = { "api", "regression", "smoke" },
+	@Test(description = "verify if login api working for FD user", groups = { "api", "regression", "smoke","login" },
 			dataProviderClass =com.dataProviders.DataProviderUtils.class, dataProvider = "LoginAPIdataProvider")
 	
 	public void loginApiTest(userBean userbean) throws IOException {
