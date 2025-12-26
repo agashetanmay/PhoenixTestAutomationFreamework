@@ -36,8 +36,6 @@ import io.restassured.module.jsv.JsonSchemaValidator;
 
 public class createJobApiFakerDataDrivenTest {
 
-	
-	
     @Test(description = "verify create JOB api is able to create Inwarrenty job", groups = { "api", "regression", "smoke" },
     		dataProviderClass = com.dataProviders.DataProviderUtils.class, dataProvider = "CreateJobAPIFakerDataProvider"  )
 	public void verifyCreateJobApiTest(createJobPayload payload) {
