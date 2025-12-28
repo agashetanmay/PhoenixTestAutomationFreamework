@@ -8,6 +8,7 @@ import org.testng.annotations.DataProvider;
 
 import com.api.Utils.CSVReaderUtility;
 import com.api.Utils.ExcelReaderUtil2;
+import com.api.Utils.ExcelReaderUtil3;
 import com.api.Utils.FakerDataGenerator;
 import com.api.Utils.JsonReaderUtil;
 import com.api.Utils.createJobBeanMapper;
@@ -69,9 +70,10 @@ public class DataProviderUtils {
 	}
 	
 	@DataProvider(name="loginAPIExceldataProvider", parallel=true)
-	public static Iterator<userCredentials> loginAPIExceldataProvider() {
+	public static Iterator<userBean> loginAPIExceldataProvider() {
 		
-		return ExcelReaderUtil2.loadTestData();
+		return ExcelReaderUtil3.loadTestData("loginTestData",userBean.class);
 		
 	}
+	
 }
