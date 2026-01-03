@@ -16,6 +16,7 @@ import com.api.request.model.createJobPayload;
 import com.api.request.model.userCredentials;
 import com.dataProviders.api.bean.createJobBean;
 import com.dataProviders.api.bean.userBean;
+import com.database.dao.createJobPayloadDataDao;
 
 public class DataProviderUtils {
   
@@ -77,20 +78,27 @@ public class DataProviderUtils {
 	}
 	@DataProvider(name="createJobAPIExceldataProvider", parallel=true)
 	public static Iterator<createJobPayload> createJobAPIExceldataProvider() {
-		
 		Iterator<createJobBean>iterator = ExcelReaderUtil3.loadTestData("createJobTestData",createJobBean.class);
-		
 		List<createJobPayload> payloadList = new ArrayList<createJobPayload>();
-		
 	    createJobBean tempBean;
 	    createJobPayload tempPayload;
-	    
 	    while(iterator.hasNext()) {
 	    	tempBean = iterator.next();
 	    	tempPayload = createJobBeanMapper.mapper(tempBean);
 	    	payloadList.add(tempPayload);	
 	    }
 	    return payloadList.iterator();
+	}
+	
+	@DataProvider(name="CreateJobAPIDBdataProvider", parallel=true)
+	public static Iterator<createJobPayload> createJobAPIDBDataProvider() {
+		List<createJobBean> beanList =	createJobPayloadDataDao.getCreateJobPayloadData();
+		List<createJobPayload> payloadList = new ArrayList<createJobPayload>();
+		for(createJobBean createJobBean:beanList) { 
+			createJobPayload payload = createJobBeanMapper.mapper(createJobBean);
+			payloadList.add(payload); 
+		   }
+		   return payloadList.iterator();
 	}
 	
 	
