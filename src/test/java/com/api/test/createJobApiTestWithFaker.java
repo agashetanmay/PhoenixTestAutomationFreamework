@@ -1,6 +1,7 @@
 package com.api.test;
 
 import org.hamcrest.Matchers;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -22,6 +23,8 @@ import com.api.request.model.CustomerAddress;
 import com.api.request.model.CustomerProduct;
 import com.api.request.model.Problems;
 import com.api.request.model.createJobPayload;
+import com.database.dao.CustomerDao;
+import com.database.model.CustomerDBModel;
 import com.github.javafaker.Faker;
 
 import static io.restassured.RestAssured.*;
@@ -34,25 +37,36 @@ import java.util.Random;
 import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
 
-public class createJobApiTest2 {
+public class createJobApiTestWithFaker {
 
-	createJobPayload payload;
+	createJobPayload createJobPayload;
 	@BeforeMethod(description = "create job api payload")
 	public void Setup() {
-		payload = FakerDataGenerator.generateFakecreateJobdata();
+		createJobPayload = FakerDataGenerator.generateFakecreateJobdata();
 	}
 	
     @Test(description = "verify create JOB api is able to create Inwarrenty job", groups = { "api", "regression", "smoke" })
 	public void verifyCreateJobApiTest() {
-		given()
-		.spec(SpecUtil.requestSpecificationWithAuthAndPayload(Role.FD, payload))
+		int customerId = given()
+		.spec(SpecUtil.requestSpecificationWithAuthAndPayload(Role.FD, createJobPayload))
 		.when().post("/job/create")
 		.then().log().all().spec(SpecUtil.responseSpec_OK())
 		.body("message",Matchers.equalTo("Job created successfully. "))
 		.body("data",Matchers.notNullValue())
 		.body("data.job_number", Matchers.containsString("JOB_"))
-		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Response-schema/createJobResponseSchema.json"));
+		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Response-schema/createJobResponseSchema.json"))
+		.extract().body().jsonPath().getInt("data.tr_customer_id");
+		Customer expectedCustomerData = createJobPayload.customer();  // this will give us faker expected customer data
 		
+		CustomerDBModel actualCustomerDataInDB = CustomerDao.getCustomerInfo(customerId);
+		
+		Assert.assertEquals(actualCustomerDataInDB.getFirst_name(),expectedCustomerData.first_name());
+		Assert.assertEquals(actualCustomerDataInDB.getLast_name(),expectedCustomerData.last_name());
+		Assert.assertEquals(actualCustomerDataInDB.getMobile_number(),expectedCustomerData.mobile_number());
+		Assert.assertEquals(actualCustomerDataInDB.getMobile_number_alt(),expectedCustomerData.mobile_number_alt());
+		Assert.assertEquals(actualCustomerDataInDB.getEmail_id(),expectedCustomerData.email_id());
+		Assert.assertEquals(actualCustomerDataInDB.getEmail_id_alt(),expectedCustomerData.email_id_alt());
+		 
 	}
 	
 	

@@ -11,6 +11,8 @@
      <class name= "com.api.tests.datadriven.LoginApiJsonDataDrivenTest"/>
      <class name= "com.api.tests.datadriven.createJobApiJsonDataDrivenTest"/> 
      <class name= "com.api.tests.datadriven.createJobApiExcelDataDrivenTest"/> 
+     <class name= "com.api.tests.datadriven.createJobApiDBDrivenTest"/> 
+     
     </classes>
   </test>
 </suite>

@@ -58,7 +58,7 @@ public class createJobPayloadDataDao {
 			limit 5;
 			
 			""";
-
+    private createJobPayloadDataDao () {}
    private static Faker faker = new Faker(new Locale("en-IND"));
 	
 	public static List<createJobBean> getCreateJobPayloadData() {
