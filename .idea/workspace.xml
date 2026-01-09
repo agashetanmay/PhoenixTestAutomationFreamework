@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f456abd-21f6-42e6-aee2-ebb69fbb6ddf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/csv/readCSVFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/csv/readCSVFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/testData/Logincred.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/api/Utils/JsonReaderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/api/Utils/JsonReaderUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testng_datadriven.xml" beforeDir="false" afterPath="$PROJECT_DIR$/testng_datadriven.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

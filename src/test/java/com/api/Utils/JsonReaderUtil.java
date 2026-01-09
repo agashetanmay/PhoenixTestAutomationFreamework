@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonReaderUtil {
-
+	
 	public static <T> Iterator<T> loadJSON(String fileName,Class<T[]>claszz) {
 		
 		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
