@@ -27,9 +27,11 @@ import com.api.request.model.Problems;
 import com.api.request.model.createJobPayload;
 import com.database.dao.CustomerDao;
 import com.database.dao.customerAddressDao;
+import com.database.dao.mapJobProblemDao;
 import com.database.model.CustomerAddressDBModel;
 import com.database.model.CustomerDBModel;
 import com.database.model.CustomerProductDBModel;
+import com.database.model.MapJobProblemDBModel;
 import com.database.dao.CustomerProductDao;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
@@ -43,12 +45,13 @@ public class createJobApiTestWithDBValidation {
 	createJobPayload createjobpayload;
 	int customerId;
 	int customerProductId;
+	int tr_job_head_Id;
 	
 	@BeforeMethod(description = "create job api payload")
 	public void Setup() {
 		customer = new Customer("tanmay", "agashe", "6757898909", "", "tanmay@gmail.com", "");
 		customeraddress = new CustomerAddress("123 DP ROAD", "ASD APT", "zxs", "ZXC", "qwe", "334356", "India", "Chhattisgarh");
-		customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "69346567891015", "69346567891015", "69346567891015", DateTimeUtil.getTimeWithDaysAgo(10), 
+		customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "69346567891000", "69346567891000", "69346567891000", DateTimeUtil.getTimeWithDaysAgo(10), 
 		Product.NEXUS_2.getCode(), Model.Nexus2_Blue.getCode());
 		
 		problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "smartphone is running slow");
@@ -113,6 +116,12 @@ public class createJobApiTestWithDBValidation {
 		Assert.assertEquals(customerProductDBModel.getDop(),customerproduct.dop());
 		Assert.assertEquals(customerProductDBModel.getMst_model_id(),customerproduct.mst_model_id());
 		Assert.assertEquals(customerProductDBModel.getPopurl(),customerproduct.popurl());
+		
+		tr_job_head_Id = response.then().extract().body().jsonPath().getInt("data.id");
+		
+		MapJobProblemDBModel jobDataFrmDB = mapJobProblemDao.getProblemDetails(tr_job_head_Id);
+		Assert.assertEquals(jobDataFrmDB.getMst_problem_id(),createjobpayload.problems().get(0).id());
+		Assert.assertEquals(jobDataFrmDB.getRemark(),createjobpayload.problems().get(0).remark());
 		
 	}
 	
