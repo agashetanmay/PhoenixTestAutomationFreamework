@@ -25,18 +25,17 @@ import com.api.request.model.CustomerAddress;
 import com.api.request.model.CustomerProduct;
 import com.api.request.model.Problems;
 import com.api.request.model.createJobPayload;
+import com.api.response.model.CreateJobResponseModel;
 import com.database.dao.CustomerDao;
+import com.database.dao.CustomerProductDao;
 import com.database.dao.customerAddressDao;
 import com.database.dao.mapJobProblemDao;
 import com.database.model.CustomerAddressDBModel;
 import com.database.model.CustomerDBModel;
 import com.database.model.CustomerProductDBModel;
 import com.database.model.MapJobProblemDBModel;
-import com.database.dao.CustomerProductDao;
-import io.restassured.module.jsv.JsonSchemaValidator;
-import io.restassured.response.Response;
 
-public class createJobApiTestWithDBValidation {
+public class createJobApiTestWithDBValidation2 {
 	
 	Customer customer;
 	CustomerAddress customeraddress;
@@ -45,13 +44,12 @@ public class createJobApiTestWithDBValidation {
 	createJobPayload createjobpayload;
 	int customerId;
 	int customerProductId;
-	int tr_job_head_Id;
 	
 	@BeforeMethod(description = "create job api payload")
 	public void Setup() {
 		customer = new Customer("tanmay", "agashe", "6757898909", "", "tanmay@gmail.com", "");
 		customeraddress = new CustomerAddress("123 DP ROAD", "ASD APT", "zxs", "ZXC", "qwe", "334356", "India", "Chhattisgarh");
-		customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "69346567891000", "69346567891000", "69346567891000", DateTimeUtil.getTimeWithDaysAgo(10), 
+		customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "78946567895350", "78946567895350", "78946567895350", DateTimeUtil.getTimeWithDaysAgo(10), 
 		Product.NEXUS_2.getCode(), Model.Nexus2_Blue.getCode());
 		
 		problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "smartphone is running slow");
@@ -66,23 +64,18 @@ public class createJobApiTestWithDBValidation {
 	
     @Test(description = "verify create JOB api is able to create Inwarrenty job", groups = { "api", "regression", "smoke" })
 	public void verifyCreateJobApiTest() {
-		Response response= given()
+    	CreateJobResponseModel CreateJobResponseModel = given()
 		.spec(SpecUtil.requestSpecificationWithAuthAndPayload(Role.FD, createjobpayload))
 		.when().post("/job/create")
 		.then().log().all().spec(SpecUtil.responseSpec_OK())
 		.body("message",Matchers.equalTo("Job created successfully. "))
 		.body("data",Matchers.notNullValue())
 		.body("data.job_number", Matchers.containsString("JOB_"))
-		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Response-schema/createJobResponseSchema.json"))
-//		.extract().body().jsonPath().getInt("data.tr_customer_id");
-		.extract().response();
+		.extract().as(CreateJobResponseModel.class);
 		
-		customerId = response.then().extract().body().jsonPath().getInt("data.tr_customer_id");
-		customerProductId = response.then().extract().body().jsonPath().getInt("data.tr_customer_product_id");
-		
-		System.out.println(customerId);
+		System.out.println(CreateJobResponseModel);
 				
-		CustomerDBModel customerDataFromDB = CustomerDao.getCustomerInfo(customerId);
+		CustomerDBModel customerDataFromDB = CustomerDao.getCustomerInfo(CreateJobResponseModel.getData().getTr_customer_id());
 		System.out.println("--------------------------------------------");
 		System.out.println(customerDataFromDB);
 		
@@ -107,7 +100,7 @@ public class createJobApiTestWithDBValidation {
 		Assert.assertEquals(customerAddressDBModel.getCountry(),customeraddress.country());
 		Assert.assertEquals(customerAddressDBModel.getState(),customeraddress.state());
 		
-		CustomerProductDBModel customerProductDBModel = CustomerProductDao.getProductInfo(customerProductId);
+		CustomerProductDBModel customerProductDBModel = CustomerProductDao.getProductInfo(CreateJobResponseModel.getData().getTr_customer_product_id());
 		System.out.println(customerProductDBModel);
 		//this will intentionally fail
 		Assert.assertEquals(customerProductDBModel.getImei1(),customerproduct.imei1());
@@ -117,12 +110,10 @@ public class createJobApiTestWithDBValidation {
 		Assert.assertEquals(customerProductDBModel.getMst_model_id(),customerproduct.mst_model_id());
 		Assert.assertEquals(customerProductDBModel.getPopurl(),customerproduct.popurl());
 		
-		tr_job_head_Id = response.then().extract().body().jsonPath().getInt("data.id");
-		
+		int tr_job_head_Id = CreateJobResponseModel.getData().getId();
 		MapJobProblemDBModel jobDataFrmDB = mapJobProblemDao.getProblemDetails(tr_job_head_Id);
 		Assert.assertEquals(jobDataFrmDB.getMst_problem_id(),createjobpayload.problems().get(0).id());
 		Assert.assertEquals(jobDataFrmDB.getRemark(),createjobpayload.problems().get(0).remark());
-		
 	}
 	
 	
