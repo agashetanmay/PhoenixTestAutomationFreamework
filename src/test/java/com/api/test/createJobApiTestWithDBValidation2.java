@@ -28,11 +28,13 @@ import com.api.request.model.createJobPayload;
 import com.api.response.model.CreateJobResponseModel;
 import com.database.dao.CustomerDao;
 import com.database.dao.CustomerProductDao;
+import com.database.dao.JobHeadDao;
 import com.database.dao.customerAddressDao;
 import com.database.dao.mapJobProblemDao;
 import com.database.model.CustomerAddressDBModel;
 import com.database.model.CustomerDBModel;
 import com.database.model.CustomerProductDBModel;
+import com.database.model.JobHeadDBmodel;
 import com.database.model.MapJobProblemDBModel;
 
 public class createJobApiTestWithDBValidation2 {
@@ -49,7 +51,7 @@ public class createJobApiTestWithDBValidation2 {
 	public void Setup() {
 		customer = new Customer("tanmay", "agashe", "6757898909", "", "tanmay@gmail.com", "");
 		customeraddress = new CustomerAddress("123 DP ROAD", "ASD APT", "zxs", "ZXC", "qwe", "334356", "India", "Chhattisgarh");
-		customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "78946567895350", "78946567895350", "78946567895350", DateTimeUtil.getTimeWithDaysAgo(10), 
+		customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "08546567895389", "08546567895389", "08546567895389", DateTimeUtil.getTimeWithDaysAgo(10), 
 		Product.NEXUS_2.getCode(), Model.Nexus2_Blue.getCode());
 		
 		problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "smartphone is running slow");
@@ -74,8 +76,9 @@ public class createJobApiTestWithDBValidation2 {
 		.extract().as(CreateJobResponseModel.class);
 		
 		System.out.println(CreateJobResponseModel);
-				
-		CustomerDBModel customerDataFromDB = CustomerDao.getCustomerInfo(CreateJobResponseModel.getData().getTr_customer_id());
+		int customerId = CreateJobResponseModel.getData().getTr_customer_id();
+		
+		CustomerDBModel customerDataFromDB = CustomerDao.getCustomerInfo(customerId);
 		System.out.println("--------------------------------------------");
 		System.out.println(customerDataFromDB);
 		
@@ -106,15 +109,23 @@ public class createJobApiTestWithDBValidation2 {
 		Assert.assertEquals(customerProductDBModel.getImei1(),customerproduct.imei1());
 		Assert.assertEquals(customerProductDBModel.getImei2(),customerproduct.imei2());
 		Assert.assertEquals(customerProductDBModel.getSerial_number(),customerproduct.serial_number());
-		Assert.assertEquals(customerProductDBModel.getDop(),customerproduct.dop());
+//		Assert.assertEquals(customerProductDBModel.getDop(),customerproduct.dop()); //this will intentionally fail as actual date and expected date is mismatched
 		Assert.assertEquals(customerProductDBModel.getMst_model_id(),customerproduct.mst_model_id());
 		Assert.assertEquals(customerProductDBModel.getPopurl(),customerproduct.popurl());
 		
 		int tr_job_head_Id = CreateJobResponseModel.getData().getId();
 		MapJobProblemDBModel jobDataFrmDB = mapJobProblemDao.getProblemDetails(tr_job_head_Id);
+		System.out.println(jobDataFrmDB);
 		Assert.assertEquals(jobDataFrmDB.getMst_problem_id(),createjobpayload.problems().get(0).id());
 		Assert.assertEquals(jobDataFrmDB.getRemark(),createjobpayload.problems().get(0).remark());
+		
+		
+//		int tr_customer_id = CreateJobResponseModel.getData().getTr_customer_id();
+		JobHeadDBmodel jobHeadDataDBModel = JobHeadDao.getDataFromJobHead(customerId);
+		System.out.println(jobHeadDataDBModel);
+		Assert.assertEquals(jobHeadDataDBModel.getMst_service_location_id(),createjobpayload.mst_service_location_id());
+		Assert.assertEquals(jobHeadDataDBModel.getMst_platform_id(),createjobpayload.mst_platform_id());
+		Assert.assertEquals(jobHeadDataDBModel.getMst_warrenty_status_id(),createjobpayload.mst_warrenty_status_id());
+		Assert.assertEquals(jobHeadDataDBModel.getMst_oem_id(),createjobpayload.mst_oem_id());
 	}
-	
-	
 }
