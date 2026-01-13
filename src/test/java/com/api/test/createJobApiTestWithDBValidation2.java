@@ -73,7 +73,7 @@ public class createJobApiTestWithDBValidation2 {
 		.body("message",Matchers.equalTo("Job created successfully. "))
 		.body("data",Matchers.notNullValue())
 		.body("data.job_number", Matchers.containsString("JOB_"))
-		.extract().as(CreateJobResponseModel.class);
+		.extract().as(CreateJobResponseModel.class);   // Deserialization of response mapping json to java object
 		
 		System.out.println(CreateJobResponseModel);
 		int customerId = CreateJobResponseModel.getData().getTr_customer_id();
