@@ -5,15 +5,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.api.Utils.EnvUtil;
 import com.api.Utils.configManager;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 public class DatabaseManager {
 //double locking design pattern 
-	public static final String DB_URL = configManager.getProperty("DB_URL");
-	public static final String DB_USERNAME = configManager.getProperty("DB_USERNAME");
-	public static final String DB_PASSWORD = configManager.getProperty("DB_PASSWORD");
+	public static final String DB_URL = EnvUtil.getValue("DB_URL");//this value will take from .env file 
+	public static final String DB_USERNAME = EnvUtil.getValue("DB_USERNAME"); //this value will take from .env file 
+	public static final String DB_PASSWORD = EnvUtil.getValue("DB_PASSWORD");  //this value will take from .env file 
 	public static final int MAX_POOL_SIZE = Integer.parseInt(configManager.getProperty("MAX_POOL_SIZE"));
 	public static final int MIN_IDLE_COUNT = Integer.parseInt(configManager.getProperty("MINIMUM_IDLE_COUNT"));
 	public static final int CONNECTION_TIMEOUT_IN_SEC = Integer
