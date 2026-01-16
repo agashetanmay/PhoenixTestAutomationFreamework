@@ -51,7 +51,7 @@ public class createJobApiTestWithDBValidation {
 	public void Setup() {
 		customer = new Customer("tanmay", "agashe", "6757898909", "", "tanmay@gmail.com", "");
 		customeraddress = new CustomerAddress("123 DP ROAD", "ASD APT", "zxs", "ZXC", "qwe", "334356", "India", "Chhattisgarh");
-		customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "69346567891000", "69346567891000", "69346567891000", DateTimeUtil.getTimeWithDaysAgo(10), 
+		customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "69346567893456", "69346567893456", "69346567893456", DateTimeUtil.getTimeWithDaysAgo(10), 
 		Product.NEXUS_2.getCode(), Model.Nexus2_Blue.getCode());
 		
 		problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "smartphone is running slow");
