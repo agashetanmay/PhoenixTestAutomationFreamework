@@ -4,16 +4,25 @@ import com.api.constant.Role;
 import com.api.request.model.userCredentials;
 
 import static io.restassured.RestAssured.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import io.restassured.http.ContentType;
 
 public class authTokenProvider {
 	
-	private authTokenProvider() {
-		
-	}
+	private static Map<Role,String> tokenCatch = new ConcurrentHashMap<Role,String>();  //ConcurrentHashMap is thread safe
+	
+	private authTokenProvider() {}
 	
 	public static String getToken(Role role) {
 		userCredentials usercredentials = null;
+		
+		if(tokenCatch.containsKey(role)) {
+			return tokenCatch.get(role);   // return the value(token) for specified role
+		}
 		
 		  if(role == Role.FD) {
 		 usercredentials = new userCredentials("iamfd","password");
@@ -39,7 +48,8 @@ public class authTokenProvider {
 		.jsonPath()
 		.getString("data.token");
        System.out.println("extracted the token");
-	  
+      
+       tokenCatch.put(role, token);
 	  return token;
 	}
 

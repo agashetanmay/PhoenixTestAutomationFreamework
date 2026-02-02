@@ -37,7 +37,7 @@ public class createJobApiTest {
 	public void Setup() {
 		Customer customer = new Customer("tanmay", "agashe", "6757898909", "", "tanmay@gmail.com", "");
 		CustomerAddress customeraddress = new CustomerAddress("123 DP ROAD", "ASD APT", "zxs", "ZXC", "qwe", "334356", "India", "Chhattisgarh");
-		CustomerProduct customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "11346567890346", "11346567890346", "11346567890346", DateTimeUtil.getTimeWithDaysAgo(10), 
+		CustomerProduct customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "15346567890346", "15346567890346", "15346567890346", DateTimeUtil.getTimeWithDaysAgo(10), 
 		Product.NEXUS_2.getCode(), Model.Nexus2_Blue.getCode());
 		
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "smartphone is running slow");
