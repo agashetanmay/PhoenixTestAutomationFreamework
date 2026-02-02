@@ -1,25 +1,24 @@
 package com.api.test;
 
 import org.hamcrest.Matchers;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import com.api.Utils.SpecUtil;
-import com.api.Utils.authTokenProvider;
-import com.api.Utils.configManager;
 import com.api.constant.Role;
-
-import static io.restassured.RestAssured.*;
-import io.restassured.http.ContentType;
+import com.api.services.DashboardService;
 import io.restassured.module.jsv.JsonSchemaValidator;
 
 public class countApiTest {
+	private DashboardService dashboardService;
+	
+	@BeforeMethod
+	public void setup() {
+	 dashboardService = new DashboardService(); 
+	}
 	
 	@Test(description = "verify the count API giving correct response", groups = { "api", "regression", "smoke"})
 	public void verfiyCountAPI() {
-		
-		given().spec(SpecUtil.requestSpecificationWithAuth(Role.FD))
-		.when().get("/dashboard/count")
-		.then()
+		dashboardService.count(Role.FD).then()
 		.spec(SpecUtil.responseSpec_OK())
 		.body("message", Matchers.equalTo("Success"))
 		.time(Matchers.lessThan(15000L))
@@ -34,8 +33,7 @@ public class countApiTest {
 	}
 	@Test(description = "verify the count API giving correct response for missing auth token", groups = { "api", "negative","regression", "smoke"})
 	public void countAPITestMissingAuthToken() {
-		given().spec(SpecUtil.requestSpec()).when().get("/dashboard/count")
-		.then().spec(SpecUtil.responseSpec_TEXT(401));
+		dashboardService.countWithNoAuth().then().spec(SpecUtil.responseSpec_TEXT(401));
 	}
 	
 

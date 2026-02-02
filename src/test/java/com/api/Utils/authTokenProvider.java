@@ -1,21 +1,17 @@
 package com.api.Utils;
 
-import com.api.constant.Role;
-import com.api.request.model.userCredentials;
-
-import static io.restassured.RestAssured.*;
-
-import java.util.HashMap;
+import static io.restassured.RestAssured.given;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
+import com.api.constant.Role;
+import com.api.request.model.userCredentials;
 import io.restassured.http.ContentType;
 
 public class authTokenProvider {
 	
 	private static Map<Role,String> tokenCatch = new ConcurrentHashMap<Role,String>();  //ConcurrentHashMap is thread safe
 	
-	private authTokenProvider() {}
+	private authTokenProvider() {}   //private constructor
 	
 	public static String getToken(Role role) {
 		userCredentials usercredentials = null;
