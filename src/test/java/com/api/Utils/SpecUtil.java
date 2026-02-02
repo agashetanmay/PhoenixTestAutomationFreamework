@@ -40,6 +40,7 @@ public class SpecUtil {
 		.log(LogDetail.HEADERS)
 		.log(LogDetail.BODY)
 		.build();
+		
 		return request;	
 }
 	

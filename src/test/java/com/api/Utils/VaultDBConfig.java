@@ -1,0 +1,41 @@
+package com.api.Utils;
+
+import java.util.Map;
+
+import com.bettercloud.vault.Vault;
+import com.bettercloud.vault.VaultConfig;
+import com.bettercloud.vault.VaultException;
+import com.bettercloud.vault.response.LogicalResponse;
+
+public class VaultDBConfig {
+
+	private static VaultConfig vaultConfig;
+	private static Vault vault;
+
+	static {
+		try {
+			vaultConfig = new VaultConfig()
+					   .address("http://16.171.5.160:8200").token("root").build();
+			//valut server and valut token value is pick from system variable path from my locale machine
+		} catch (VaultException e) {
+			e.printStackTrace();
+		}
+		vault = new Vault(vaultConfig);
+	}
+	private VaultDBConfig() {}  //private constructor 
+	
+	public static String getSecret(String key) {
+		
+		LogicalResponse response = null;
+		try {
+			response = vault.logical().read("secret/phoenix/qa/database");
+		} catch (VaultException e) {
+			e.printStackTrace();
+			return null;
+		}
+		Map<String, String> dataMap = response.getData();
+		return dataMap.get(key);
+	}	
+	}
+
+
