@@ -33,5 +33,6 @@ public class loginApiTest {
 		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Response-schema/loginResponseSchema.json"));
 
 	}
+	
 
 }

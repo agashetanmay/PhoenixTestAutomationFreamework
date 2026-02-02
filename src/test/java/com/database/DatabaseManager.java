@@ -6,15 +6,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.api.Utils.EnvUtil;
+import com.api.Utils.VaultDBConfig;
 import com.api.Utils.configManager;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 public class DatabaseManager {
 //double locking design pattern 
-	public static final String DB_URL = EnvUtil.getValue("DB_URL");//this value will take from .env file 
-	public static final String DB_USERNAME = EnvUtil.getValue("DB_USERNAME"); //this value will take from .env file 
-	public static final String DB_PASSWORD = EnvUtil.getValue("DB_PASSWORD");  //this value will take from .env file 
+//	public static final String DB_URL = EnvUtil.getValue("DB_URL");//this value will take from .env file 
+//	public static final String DB_USERNAME = EnvUtil.getValue("DB_USERNAME"); //this value will take from .env file 
+//	public static final String DB_PASSWORD = EnvUtil.getValue("DB_PASSWORD");  //this value will take from .env file 
+	
 	public static final int MAX_POOL_SIZE = Integer.parseInt(configManager.getProperty("MAX_POOL_SIZE"));
 	public static final int MIN_IDLE_COUNT = Integer.parseInt(configManager.getProperty("MINIMUM_IDLE_COUNT"));
 	public static final int CONNECTION_TIMEOUT_IN_SEC = Integer
@@ -27,11 +29,46 @@ public class DatabaseManager {
 	private volatile static HikariDataSource hikariDataSource;
 	public static Connection connection; // any update happen to connection variable
 	// all the thread will aware of it//
-
+    public static boolean isVaultUp = true;
+	public static final String DB_URL = loadSecret("DB_URL");//this value will take from valute secrete file
+	public static final String DB_USERNAME = loadSecret("DB_USERNAME"); //this value will take from .valute secrete file 
+	public static final String DB_PASSWORD =  loadSecret("DB_PASSWORD");   //this value will take from valute secrete file
+	
+	public static String loadSecret( String key) {
+		String value = null;
+		if(isVaultUp) {   // it return null then it will take value from env file 
+		value = VaultDBConfig.getSecret(key);
+		if(value==null) {
+			System.err.println("vault is down !!");
+	    isVaultUp=false;
+		}
+		else {
+			System.err.println("Reading value from vault..");
+			return value;
+		}
+		}
+		   value =EnvUtil.getValue(key);
+		   System.out.println("reading value from env file");
+		   return value;
+		   
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private DatabaseManager() {
 		/// make this class as singleton by introducing private constructor
 	}
-
+    
 	// to make this method thread safe we have introduce synchronized keyword
 	public static void initializePool() {
 
