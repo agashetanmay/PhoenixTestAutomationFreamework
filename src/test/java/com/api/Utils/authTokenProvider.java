@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.api.constant.Role;
 import com.api.request.model.userCredentials;
+import com.api.services.JobService;
+
 import io.restassured.http.ContentType;
 
 public class authTokenProvider {
@@ -48,5 +50,6 @@ public class authTokenProvider {
        tokenCatch.put(role, token);
 	  return token;
 	}
-
+	
+	
 }
