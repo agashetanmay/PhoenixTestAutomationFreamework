@@ -15,10 +15,7 @@ public class JDBCdemo {
 	public static void main(String[] args) throws SQLException  {
 		
 	Connection  connection =DriverManager.getConnection(configManager.getProperty("DB_URL"),configManager.getProperty("DB_USERNAME"),configManager.getProperty("DB_PASSWORD"));
-	
-	
 	Statement statement = connection.createStatement();
-	
 	ResultSet resultset = statement.executeQuery("select first_name,last_name,mobile_number from tr_customer tc");
 	
 	while(resultset.next()) {

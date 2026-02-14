@@ -3,8 +3,9 @@ package com.dataProviders.api.bean;
 import com.opencsv.bean.CsvBindByName;
 import com.poiji.annotation.ExcelCellName;
 
-public class userBean {
-	@CsvBindByName(column="username")
+public class userBean {    // this class is useed to map the instance variable with excle and CSV
+	                         //And call this class in dataprovider class to map the data from excel
+	@CsvBindByName(column="username")   
 	@ExcelCellName("username")
 	private String username;
 	

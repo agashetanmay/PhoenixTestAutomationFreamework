@@ -34,7 +34,7 @@ public class createJobApiDataDrivenTest {
 	
 	
     @Test(description = "verify create JOB api is able to create Inwarrenty job", groups = { "api", "regression", "smoke","csv" },
-    dataProviderClass = com.dataProviders.DataProviderUtils.class, dataProvider = "CreateJobAPIdataProvider"
+    dataProviderClass = com.dataProviders.DataProviderUtils.class, dataProvider = "CreateJobAPICSVDataProvider"
     )
 	public void verifyCreateJobApiTest(createJobPayload createjobpayload) {
 		given()

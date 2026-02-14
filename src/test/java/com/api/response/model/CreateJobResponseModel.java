@@ -1,7 +1,5 @@
 package com.api.response.model;
 
-import com.database.model.CustomerAddressDBModel;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

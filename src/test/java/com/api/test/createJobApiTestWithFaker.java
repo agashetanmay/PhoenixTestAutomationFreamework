@@ -23,6 +23,7 @@ import com.api.request.model.CustomerAddress;
 import com.api.request.model.CustomerProduct;
 import com.api.request.model.Problems;
 import com.api.request.model.createJobPayload;
+import com.api.services.JobService;
 import com.database.dao.CustomerDao;
 import com.database.model.CustomerDBModel;
 import com.github.javafaker.Faker;
@@ -40,16 +41,17 @@ import io.restassured.module.jsv.JsonSchemaValidator;
 public class createJobApiTestWithFaker {
 
 	createJobPayload createJobPayload;
+	JobService jobService;
+	
 	@BeforeMethod(description = "create job api payload")
 	public void Setup() {
 		createJobPayload = FakerDataGenerator.generateFakecreateJobdata();
+		jobService = new JobService();
 	}
 	
     @Test(description = "verify create JOB api is able to create Inwarrenty job", groups = { "api", "regression", "smoke" })
 	public void verifyCreateJobApiTest() {
-		int customerId = given()
-		.spec(SpecUtil.requestSpecificationWithAuthAndPayload(Role.FD, createJobPayload))
-		.when().post("/job/create")
+		int customerId = jobService.Create(Role.FD, createJobPayload)
 		.then().log().all().spec(SpecUtil.responseSpec_OK())
 		.body("message",Matchers.equalTo("Job created successfully. "))
 		.body("data",Matchers.notNullValue())
