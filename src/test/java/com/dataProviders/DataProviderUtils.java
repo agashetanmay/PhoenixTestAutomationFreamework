@@ -28,7 +28,7 @@ public class DataProviderUtils {
 		
 	}
 	
-	@DataProvider(name="CreateJobAPIdataProvider", parallel=true)
+	@DataProvider(name="CreateJobAPICSVDataProvider", parallel=true)
 	public static Iterator<createJobPayload> createJobDataProvider() {
 	Iterator<createJobBean>	createJobBeanIterator = CSVReaderUtility
 			.loadCSV("testData/createJobData.csv", createJobBean.class);
@@ -72,7 +72,7 @@ public class DataProviderUtils {
 	
 	@DataProvider(name="loginAPIExceldataProvider", parallel=true)
 	public static Iterator<userBean> loginAPIExceldataProvider() {
-		
+		                                       // sheetname and userbean class name
 		return ExcelReaderUtil3.loadTestData("loginTestData",userBean.class);
 		
 	}

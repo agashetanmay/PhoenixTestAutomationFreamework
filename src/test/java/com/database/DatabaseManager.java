@@ -49,22 +49,8 @@ public class DatabaseManager {
 		}
 		   value =EnvUtil.getValue(key);
 		   System.out.println("reading value from env file");
-		   return value;
-		   
-		
-		
-		
+		   return value;	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	private DatabaseManager() {
 		/// make this class as singleton by introducing private constructor
 	}
@@ -92,7 +78,6 @@ public class DatabaseManager {
 		}
 
 	}
-
 	public static Connection getConnection() throws SQLException {
 		
 		if(hikariDataSource==null) {
