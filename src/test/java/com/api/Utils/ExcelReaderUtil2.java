@@ -36,8 +36,6 @@ public class ExcelReaderUtil2 {
 			
 			e.printStackTrace();
 		}
-		
-		
 
 		int usernameIndex = -1;
 		int passwordIndex = -1;

@@ -1,5 +1,4 @@
 package com.api.test;
-
 import org.hamcrest.Matchers;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

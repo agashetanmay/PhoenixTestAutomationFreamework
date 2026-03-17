@@ -26,7 +26,7 @@ public class JobNumberProvider {
 		
 		Customer customer = new Customer("tanmay", "agashe", "6757898909", "", "tanmay@gmail.com", "");
 		CustomerAddress customeraddress = new CustomerAddress("123 DP ROAD", "ASD APT", "zxs", "ZXC", "qwe", "334356", "India", "Chhattisgarh");
-		CustomerProduct customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "55346567890440", "55346567890440", "55346567890440", DateTimeUtil.getTimeWithDaysAgo(10), 
+		CustomerProduct customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "55346567890444", "55346567890444", "55346567890444", DateTimeUtil.getTimeWithDaysAgo(10), 
 		Product.NEXUS_2.getCode(), Model.Nexus2_Blue.getCode());
 		
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "smartphone is running slow");
