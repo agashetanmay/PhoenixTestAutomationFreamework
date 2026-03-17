@@ -32,14 +32,16 @@ public class createJobApiTest {
 	public void Setup() {
 		Customer customer = new Customer("tanmay", "agashe", "6757898909", "", "tanmay@gmail.com", "");
 		CustomerAddress customeraddress = new CustomerAddress("123 DP ROAD", "ASD APT", "zxs", "ZXC", "qwe", "334356", "India", "Chhattisgarh");
-		CustomerProduct customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "89346567890355", "89346567890355", "89346567890355", DateTimeUtil.getTimeWithDaysAgo(10), 
+		CustomerProduct customerproduct = new CustomerProduct(DateTimeUtil.getTimeWithDaysAgo(10), "89046567890366", "89046567890366", "89046567890366", DateTimeUtil.getTimeWithDaysAgo(10), 
 		Product.NEXUS_2.getCode(), Model.Nexus2_Blue.getCode());
 		
 		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "smartphone is running slow");
+		Problems problems1 = new Problems(Problem.OVERHEATING.getCode(), "smartphone is overheating");
 		
 		List<Problems> problemList = new ArrayList<Problems>();
 		problemList.add(problems);
-		
+		problemList.add(problems1);
+	
 		createjobpayload = new createJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warrenty_status.IN_WARRENTY.getCode(), OEM.GOOGLE.getCode(),
 		customer,customeraddress,customerproduct,problemList);
 		
