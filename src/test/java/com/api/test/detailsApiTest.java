@@ -18,7 +18,7 @@ public class detailsApiTest {
 		dashboardService = new DashboardService();
 		detailsPayload = new Details("created_today");
 	}
-
+    
 	@Test(description="verify if details API working properly", groups= {"api","smote","e2e"})
 	public void detailAPITest() {
          dashboardService.details(Role.FD, detailsPayload)

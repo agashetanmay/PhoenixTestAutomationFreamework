@@ -27,7 +27,8 @@ public class ExcelReaderUtil3 {
 			}
 			XSSFSheet sheet = workbook.getSheet(sheetName);
 		
-	      List<T> dataList = Poiji.fromExcel(sheet,clazz);
+	      List<T> dataList = Poiji.fromExcel(sheet,clazz);   //clazz name will be createJobBean or UserBean
+	                                                         // it will always read the bean classes.
                    return dataList.iterator();
 	}
 }

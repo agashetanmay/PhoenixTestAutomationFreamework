@@ -29,7 +29,7 @@ public class DatabaseManager {
 	private volatile static HikariDataSource hikariDataSource;
 	public static Connection connection; // any update happen to connection variable
 	// all the thread will aware of it//
-    public static boolean isVaultUp = true;
+    public static boolean isVaultUp = false;
 	public static final String DB_URL = loadSecret("DB_URL");//this value will take from valute secrete file
 	public static final String DB_USERNAME = loadSecret("DB_USERNAME"); //this value will take from .valute secrete file 
 	public static final String DB_PASSWORD =  loadSecret("DB_PASSWORD");   //this value will take from valute secrete file

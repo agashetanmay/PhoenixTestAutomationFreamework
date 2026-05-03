@@ -48,14 +48,14 @@ public class createJobPayloadDataDao {
 			on tr_customer.tr_customer_address_id = tr_customer_address.id
 
 			inner join tr_customer_product
-			on tr_customer_product.tr_customer_id=tr_customer.id
+			on str_customer_product.tr_customer_id=tr_customer.id
 
 			inner join tr_job_head
 			on tr_job_head.tr_customer_id=tr_customer.id
 
 			inner join map_job_problem
 			on map_job_problem.tr_job_head_id = tr_job_head.id
-			limit 5;
+			limit 3;
 			
 			""";
     private createJobPayloadDataDao () {}

@@ -33,13 +33,12 @@ public class createJobBeanMapper {
 	
 		CustomerAddress customerAddress = new CustomerAddress(bean.getCustomer_address__flat_number(), bean.getCustomer_address__apartment_name(),bean.getCustomer_address__street_name(), bean.getCustomer_address__landmark(), bean.getCustomer_address__area(), bean.getCustomer_address__pincode(),bean.getCustomer_address__country(), bean.getCustomer_address__state());
 		
-		
 		int productId = Integer.parseInt(bean.getCustomer_product__product_id());
 		int modelId = Integer.parseInt(bean.getCustomer_product__mst_model_id());
-		
 		CustomerProduct customerProduct = new CustomerProduct(bean.getCustomer_product__dop(), bean.getCustomer_product__serial_number(), bean.getCustomer_product__imei1(), bean.getCustomer_product__imei2(), bean.getCustomer_product__popurl(),modelId,productId);
 		
 		List<Problems> problemList = new ArrayList<Problems>();
+		
 		int id = Integer.parseInt(bean.getProblems__id());
 		Problems problem = new Problems(id, bean.getProblems__remark());
 		problemList.add(problem);

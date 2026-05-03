@@ -49,6 +49,19 @@ public class createJobApiFakerDataDrivenTest {
 		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Response-schema/createJobResponseSchema.json"));
 		
 	}
+    
+    @Test(description = "verify create JOB api is able to create Inwarrenty job", groups = { "api", "regression", "smoke","faker" })	
+	public void verifyCreateJobApiWithoutCountTest() {
+		given()
+		.spec(SpecUtil.requestSpecificationWithAuthAndPayload(Role.FD, FakerDataGenerator.generateFakecreateJobdata()))
+		.when().post("/job/create")
+		.then().log().all().spec(SpecUtil.responseSpec_OK())
+		.body("message",Matchers.equalTo("Job created successfully. "))
+		.body("data",Matchers.notNullValue())
+		.body("data.job_number", Matchers.containsString("JOB_"))
+		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("Response-schema/createJobResponseSchema.json"));
+		
+	}
 	
 	
 }
