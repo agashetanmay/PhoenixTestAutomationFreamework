@@ -10,7 +10,6 @@ import com.api.constant.Role;
 import com.api.request.model.search;
 import com.api.services.JobService;
 
-import io.restassured.response.Response;
 
 public class searchApiTest {
 	

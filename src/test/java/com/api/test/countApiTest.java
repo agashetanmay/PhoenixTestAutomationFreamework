@@ -23,7 +23,7 @@ public class countApiTest {
 		.body("message", Matchers.equalTo("Success"))
 		.time(Matchers.lessThan(15000L))
 		.body("data",Matchers.notNullValue())
-		.body("data.size()",Matchers.equalTo(3))
+		.body("data.size()",Matchers.equalTo(3))     
 		.body("data.count", Matchers.everyItem(Matchers.greaterThanOrEqualTo(0)))
 		.body("data.label",Matchers.everyItem(Matchers.not(Matchers.blankOrNullString())))
 		.body("data.key", Matchers.containsInAnyOrder("pending_for_delivery","created_today","pending_fst_assignment"))
